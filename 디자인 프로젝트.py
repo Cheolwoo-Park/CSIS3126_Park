@@ -59,7 +59,14 @@ for a in table_row_list:
     print(a)
 #beautifulsoup는 현재 선택된 태그들을 중심으로 자손(descendant) 태그들을 찾기 때문에 child 태그들만 찾으려면 .children를 써야됨.
 #a.tag.subtag를 실행하면, tag밑의 자손 태그들 중에 가장 처음에 나타나는 subtag 1개만 선택됨.(child ∈ descendant)
-'''
+
 
 for b in bs.find('table',{'id':'giftList'}).tr.next_siblings:
     print(b)
+#next_siblings는 선택된 태그의 부모를 기준으로 선택된 태그의 형제 태그들을 선택된 태그를 제외하고 찾아줌.
+'''
+
+print(bs.find('img',{'src':'../img/gifts/img1.jpg'}).parent.previous_sibling.get_text())
+#td 태그는 table 태그안의 하나의 행인 tr태그 의 자식인 하나의 셀을 의미하므로, td 안에 있는 이미지 태그의 부모는 td 태그임, 이 td태그의
+#앞에 있는 형제는, tr태그를 부모로 기준으로 두면 이미지를 담은 td태그의 왼쪽에 있는 셀이므로 가격이 출력됨.
+
