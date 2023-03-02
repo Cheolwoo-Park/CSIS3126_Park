@@ -70,3 +70,15 @@ print(bs.find('img',{'src':'../img/gifts/img1.jpg'}).parent.previous_sibling.get
 #td 태그는 table 태그안의 하나의 행인 tr태그 의 자식인 하나의 셀을 의미하므로, td 안에 있는 이미지 태그의 부모는 td 태그임, 이 td태그의
 #앞에 있는 형제는, tr태그를 부모로 기준으로 두면 이미지를 담은 td태그의 왼쪽에 있는 셀이므로 가격이 출력됨.
 
+'''
+Things to do:
+Using tkinter, I need to make GUI and user will enter url of amazon laptop item, and show specs of selected laptop on the GUI.
+
+Features to add:
+If user enters specific laptop model numer, the program needs to retrieve spec and price from different online electronics websites(bestbuy, newegg, microcenter)
+and how price and specs for these websites to user.
+I need to add option to save these data as CSV file.
+User authentification...
+'''
+
+
