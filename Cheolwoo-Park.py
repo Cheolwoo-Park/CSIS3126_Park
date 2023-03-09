@@ -1,8 +1,10 @@
 from urllib.parse import quote_plus
-from urllib.request import urlopen, Request
+from urllib.request import urlopen
 from urllib.error import HTTPError
 from urllib.error import URLError
 from bs4 import BeautifulSoup
+import requests
+import tkinter as tk
 
 def getHTML_bs(url):
     try:
@@ -16,9 +18,8 @@ def getHTML_bs(url):
         bs=BeautifulSoup(html.read(),'html.parser')
         return bs
 
-bs=getHTML_bs('https://www.pythonscraping.com/pages/page3.html')
+#bs=getHTML_bs('https://www.pythonscraping.com/pages/page3.html')
 #attributeerror 예외처리 필요
-
 '''
 find(),find_all() 함수 공부.
 
@@ -49,8 +50,6 @@ list_keyword=bs.find_all(class_='red')
 #전달하면 or조건이, keyword는 and 조건이 적용되어 태그들이 필터링됨.
 '''
 
-
-
 '''
 beautifulsoup로 DOM tree 이용하기.
 
@@ -64,21 +63,51 @@ for a in table_row_list:
 for b in bs.find('table',{'id':'giftList'}).tr.next_siblings:
     print(b)
 #next_siblings는 선택된 태그의 부모를 기준으로 선택된 태그의 형제 태그들을 선택된 태그를 제외하고 찾아줌.
-'''
+
 
 print(bs.find('img',{'src':'../img/gifts/img1.jpg'}).parent.previous_sibling.get_text())
 #td 태그는 table 태그안의 하나의 행인 tr태그 의 자식인 하나의 셀을 의미하므로, td 안에 있는 이미지 태그의 부모는 td 태그임, 이 td태그의
 #앞에 있는 형제는, tr태그를 부모로 기준으로 두면 이미지를 담은 td태그의 왼쪽에 있는 셀이므로 가격이 출력됨.
-
 '''
-Things to do:
-Using tkinter, I need to make GUI and user will enter url of amazon laptop item, and show specs of selected laptop on the GUI.
 
-Features to add:
-If user enters specific laptop model numer, the program needs to retrieve spec and price from different online electronics websites(bestbuy, newegg, microcenter)
-and how price and specs for these websites to user.
-I need to add option to save these data as CSV file.
-User authentification...
-'''
+
+def getHTML_bs_request(url):
+    headers = {
+    'authority': 'www.amazon.com',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-language': 'ko',
+    # 'cookie': 'session-id=132-7751821-0541661; session-id-time=2082787201l; i18n-prefs=USD; skin=noskin; ubid-main=133-3229317-0907535; session-token=P0Uz8E0v/hYpSJrs/6qcOjRRX516CHoi87Maf5bGXwCT7XcqCAe37TVpTQBM6KVMgJDZeDXaea4tlKYZ6ivuAAJbVeCzuF8iOO8Y/zfhuk2dnm6ziQlW48U6R06lyHIOesnsC/lOk+W1kCjU+zZNWvhd/FUYY0K7yDpkVlp20hENXbf5fwhhcrpJvLWRKmolc71Njh0/huZ78pBTJD1L7ajjmCiCFqgKNADGLGpN4fc=; csm-hit=s-XH340TZXD0V83AS7CWMM|1678390618333',
+    'device-memory': '4',
+    'downlink': '10',
+    'dpr': '0.9',
+    'ect': '4g',
+    'referer': 'https://www.amazon.com/s?k=laptop&crid=30E3EBYZKEI9V&sprefix=%2Caps%2C122&ref=nb_sb_ss_recent_1_0_recent',
+    'rtt': '0',
+    'sec-ch-device-memory': '4',
+    'sec-ch-dpr': '0.9',
+    'sec-ch-ua': '"Whale";v="3", "Not-A.Brand";v="8", "Chromium";v="110"',
+    'sec-ch-ua-mobile': '?1',
+    'sec-ch-ua-platform': '"Android"',
+    'sec-ch-viewport-width': '444',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36',
+    'viewport-width': '444',
+}
+    
+    #try:
+    request=requests.get(url,headers=headers)
+
+    #else:
+    bs=BeautifulSoup(request.content,'html.parser')
+    return bs
+
+window=tk.Tk()
+window.title('laptop spec comparision web crawler')
+window.mainloop()
+
 
 
