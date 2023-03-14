@@ -107,6 +107,20 @@ def getHTML_bs_request(url):
 
 window=tk.Tk()
 window.title('laptop spec comparision web crawler')
+btn_clipboard_URL_copy=tk.Button(text='Copy the URL of the laptop webpage and click this button.',width=45,height=2,master=window)
+btn_clipboard_URL_copy.grid(row=0,column=0)
+
+frame_spec=tk.Frame(master=window,width=500,height=100,bg="white")
+frame_spec.grid(row=1,column=0)
+
+#temp
+bs=getHTML_bs_request(window.clipboard_get())
+table_th=bs.find('table',id='productDetails_techSpec_section_1').find_all('th')
+table_td=bs.find('table',id='productDetails_techSpec_section_1').find_all('td')
+
+for i in range(0,len(table_th),1):
+    print(table_th[i].get_text()+' : '+table_td[i].get_text().replace('&lrm;',' '))
+
 window.mainloop()
 
 
